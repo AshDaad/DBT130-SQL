@@ -1,0 +1,25 @@
+CREATE TABLE dbo.GenreToTitle
+{
+	
+};
+
+
+TABLES:
+	dbo.Seasons:(season_id, season)
+		|
+		Genre: LinkTable
+			|
+			Title
+	
+	
+	dbo.Genre:(genre_id, genre)
+	
+	dbo.Titles:(title_id, title, picture, studio)
+	
+	
+	
+	
+Views:
+	Genres (how ever many I decide to fill the amount I need to meet requirements)
+		|
+		Action, Drama, Fantasy, Comedy, Psychological, Slice of life, Magic
