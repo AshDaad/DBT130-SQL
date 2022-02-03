@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+	<_locTag _loc="locData">Default</_locTag>
+</_locDefinition>
+		<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Basic Script</Title>
+			<Shortcut>startscript</Shortcut>
+			<Description>Creates basic script template.</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>yyyy</ID>
+					<ToolTip>The four digit numeric value for the year.</ToolTip>
+					<Default>yyyy</Default>
+				</Literal>
+				<Literal>
+					<ID>MM</ID>
+					<ToolTip>The two digit numeric value for the month.</ToolTip>
+					<Default>MM</Default>
+				</Literal>
+				<Literal>
+					<ID>dd</ID>
+					<ToolTip>The two digit numeric value for the day.</ToolTip>
+					<Default>dd</Default>
+				</Literal>
+				<Literal>
+					<ID>Comment</ID>
+					<ToolTip>The description of the procedure.</ToolTip>
+					<Default>Comment</Default>
+				</Literal>
+				<Literal>
+					<ID>A#</ID>
+					<ToolTip>What is the assignment Id?.</ToolTip>
+					<Default>Assignment#?</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[SET ANSI_NULL_DFLT_ON ON /*new columns accept NULL by default*/;
+SET ANSI_NULLS ON	/*controls ISO standard for NULL interpretation*/;
+SET ANSI_PADDING ON  /*adds trailing zeroes and blank spaces for CHAR and binary*/;
+SET ANSI_WARNINGS ON	/*(with ARITHABORT) controls how various operations related to exceptions are handled (divide by zero)*/;
+SET ARITHABORT ON	/*(with ANSI_WARNINGS) controls how various operations related to exceptions are handled (divide by zero)*/;
+SET CONCAT_NULL_YIELDS_NULL ON	/*concatenating a null value with a string yields a NULL*/;
+SET QUOTED_IDENTIFIER ON	/*allows you to use double quotes to imply object names*/;
+SET XACT_ABORT ON	/*I make batch-transactions less insane*/;
+
+BEGIN TRANSACTION;
+	/*
+		A single unit of work that, if successful and ended with an implicit or an explicit COMMIT statement,
+		 makes all data modifications made during the transaction a permanent part of the database.
+		 If unsuccessful or ended with an implicit or an explicit ROLLBACK statement then all data modifications
+		 made during the transaction will be erased.
+			--MSDN: Transaction Statements
+			--https://msdn.microsoft.com/en-us/library/ms174377.aspx
+	*/
+PRINT CONCAT(SYSDATETIMEOFFSET(), ' - ', DB_NAME());
+
+-- =============================================
+-- Author:		AshDaad
+-- Creation on:	$yyyy$-$MM$-$dd$
+-- Work Items:	$A#$
+-- Description:	$Comment$
+-- =============================================
+
+Print 'ROLLBACK'ROLLBACK TRANSACTION;
+--Print 'COMMIT'COMMIT WORK;
+/*
+
+*/]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Alt+F1</Title>
+			<Shortcut>F1</Shortcut>
+			<Description>F1 in text</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>Example</ID>
+					<ToolTip>What the table is?.</ToolTip>
+					<Default>Example</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="SQL">
+			EXEC sp_help 'dbo.$Example$'
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Defining two sets</Title>
+			<Description>A basic template to define two sets</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>Column</ID>
+					<ToolTip>The column(s) you wan't to see.</ToolTip>
+					<Default>column</Default>
+				</Literal>
+				<Literal>
+					<ID>Table</ID>
+					<ToolTip>The Table you are searching from.</ToolTip>
+					<Default>Table</Default>
+				</Literal>
+
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'SELECT * FROM SET EmployeesFromLondon' as examplePurpose,  <-- example of a --   alias.
+	$Table$.$Column$,
+	$Table$.$Column$,
+	$Table$.$Column$
+	
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,  <-- Example inputs
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+	$Table$
+--	HR.Employees AS EmployeesFromLondon <--Example input
+WHERE
+	$Table$.$Column$
+--	EmployeesFromLondon.city = 'London';  <--Example input
+
+SELECT
+--	'SELECT * FROM SET EmployeesBornInThe70s' as examplePurpose,
+	$Table$.$Column$,
+	$Table$.$Column$,
+	$Table$.$Column$
+	
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,  <-- Example inputs
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+	$Table$.$Column$
+--	HR.Employees AS EmployeesBornInThe70s 
+WHERE
+	YEAR($Table$.$Column$)
+--	YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980;
+--  ^ filtering using the YEAR Function
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Comparing two sets via a JOIN</Title>
+			<Description>A basic template to compare two sets with a JOIN</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>Column</ID>
+					<ToolTip>The column(s) you wan't to see.</ToolTip>
+					<Default>column</Default>
+				</Literal>
+				<Literal>
+					<ID>Table</ID>
+					<ToolTip>The Table you are searching from.</ToolTip>
+					<Default>Table</Default>
+				</Literal>
+				<Literal>
+					<ID>Table1</ID>
+					<ToolTip>A variety, to seperate thw tables when two are present and side by side.</ToolTip>
+					<Default>Table</Default>
+				</Literal>
+				<Literal>
+					<ID>Table2</ID>
+					<ToolTip>A variety, to seperate thw tables when two are present and side by side.</ToolTip>
+					<Default>Table</Default>
+				</Literal>
+				<Literal>
+					<ID>alias</ID>
+					<ToolTip>The alias(or name) you want the join Table to be called and refrenced by.</ToolTip>
+					<Default>alias</Default>
+				</Literal>
+
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'TheSameScriptAsAbove, but done with a JOIN AND FILTER' as examplePurpose,
+	$Table1$.$Column$,
+	$Table1$.$Column$,
+	$Table2$.$Column$,
+	$Table2$.$Column$
+--	EmployeesFromLondon.empid,
+--	EmployeesFromLondon.firstname,
+--	EmployeesFromLondon.lastname,
+--	EmployeesFromLondon.birthdate,
+--	EmployeesFromLondon.city,
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+	$Table$ AS $alias$ --Table1
+	LEFT OUTER JOIN $Table$ AS $alias$ --Table2
+		ON $Table2$.$Column$ = $Table1$.$Column$
+	
+--	HR.Employees AS EmployeesFromLondon
+--	LEFT OUTER JOIN HR.Employees AS EmployeesBornInThe70s
+--		ON EmployeesBornInThe70s.empid = EmployeesFromLondon.empid 
+--		AND YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980
+WHERE
+	$Table1$.$Column$ = --______--
+--	EmployeesFromLondon.city = 'London'
+--	AND EmployeesBornInThe70s.empid IS NULL			/*Test What happens when you --   comment this line in and out!*/
+														/*The entries with the info in empid show up */
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ExceptExample</Title>
+			<Description>A select statement that is filtering with an Except</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'EmployeesBornInThe70s EXCEPT EmployeesFromLondon' as examplePurpose,
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+--	HR.Employees AS EmployeesBornInThe70s 
+WHERE
+--	YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980
+EXCEPT
+SELECT
+--	'EmployeesBornInThe70s EXCEPT EmployeesFromLondon' as examplePurpose,
+--	EmployeesFromLondon.empid,
+--	EmployeesFromLondon.firstname,		/*This one filters out */
+--	EmployeesFromLondon.lastname,
+--	EmployeesFromLondon.birthdate,
+--	EmployeesFromLondon.city
+FROM
+--	HR.Employees AS EmployeesFromLondon
+WHERE
+--	EmployeesFromLondon.city = 'London';
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ExceptJOIN-n-FILTER</Title>
+			<Description>The Same Script As "ExceptExample", but done with a JOIN AND FILTER</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'TheSameScriptAsAbove, but done with a JOIN AND FILTER' as examplePurpose,
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city,
+--	EmployeesFromLondon.empid,
+--	EmployeesFromLondon.firstname,
+--	EmployeesFromLondon.lastname,
+--	EmployeesFromLondon.birthdate,
+--	EmployeesFromLondon.city
+FROM
+--	HR.Employees AS EmployeesBornInThe70s 
+--	LEFT OUTER JOIN HR.Employees AS EmployeesFromLondon
+--		ON EmployeesBornInThe70s.empid = EmployeesFromLondon.empid
+--		AND EmployeesFromLondon.city = 'London'
+WHERE
+--	YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980
+--	AND EmployeesFromLondon.empid IS NULL /*Test What happens when you comment this line in and out!*/
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>IntersectExample</Title>
+			<Description></Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'EmployeesFromLondon INTERSECT EmployeesBornInThe70s' as examplePurpose,
+--	EmployeesFromLondon.empid,
+--	EmployeesFromLondon.firstname,
+--	EmployeesFromLondon.lastname,
+--	EmployeesFromLondon.birthdate,
+--	EmployeesFromLondon.city
+FROM
+--	HR.Employees AS EmployeesFromLondon
+WHERE
+--	EmployeesFromLondon.city = 'London'	--<--------- NOTICE: No semicolon ending this line;
+INTERSECT
+SELECT
+--	'EmployeesFromLondon INTERSECT EmployeesBornInThe70s' as examplePurpose,
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+--	HR.Employees AS EmployeesBornInThe70s 
+WHERE
+--	YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980;
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>IntersectJOIN-n-FILTER</Title>
+			<Description>The Same Script As "IntersectExample", but done with a JOIN AND FILTER</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+--	'TheSameScriptAsAbove, but done with a JOIN AND FILTER' as examplePurpose,
+--	EmployeesFromLondon.empid,
+--	EmployeesFromLondon.firstname,
+--	EmployeesFromLondon.lastname,
+--	EmployeesFromLondon.birthdate,
+--	EmployeesFromLondon.city,
+--	EmployeesBornInThe70s.empid,
+--	EmployeesBornInThe70s.firstname,
+--	EmployeesBornInThe70s.lastname,
+--	EmployeesBornInThe70s.birthdate,
+--	EmployeesBornInThe70s.city
+FROM
+--	HR.Employees AS EmployeesFromLondon
+--	LEFT OUTER JOIN HR.Employees AS EmployeesBornInThe70s 
+--		ON EmployeesBornInThe70s.empid = EmployeesFromLondon.empid 
+--		AND YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980
+WHERE
+--	EmployeesFromLondon.city = 'London'
+--	AND EmployeesBornInThe70s.empid IS NOT NULL			/*Test What happens when you comment this line in and out!*/
+
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>IntersectJOIN-n-FILTER reversed</Title>
+			<Description>'The Same Script As IntersectExample, but done with a JOIN AND FILTER From the other direction'</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT
+/*	'TheSameScriptAsAbove, but done with a JOIN AND FILTER From the other direction' as examplePurpose,
+	EmployeesBornInThe70s.empid,
+	EmployeesBornInThe70s.firstname,
+	EmployeesBornInThe70s.lastname,
+	EmployeesBornInThe70s.birthdate,
+	EmployeesBornInThe70s.city,
+	EmployeesFromLondon.empid,
+	EmployeesFromLondon.firstname,
+	EmployeesFromLondon.lastname,
+	EmployeesFromLondon.birthdate,
+	EmployeesFromLondon.city
+*/
+FROM
+/*
+	HR.Employees AS EmployeesBornInThe70s 
+	LEFT OUTER JOIN HR.Employees AS EmployeesFromLondon
+		ON EmployeesBornInThe70s.empid = EmployeesFromLondon.empid
+		AND EmployeesFromLondon.city = 'London'
+*/
+WHERE
+/*
+	YEAR(EmployeesBornInThe70s.birthdate) BETWEEN 1970 AND 1980
+	AND EmployeesFromLondon.empid IS NOT NULL /*Test What happens when you comment this line in and out!*/
+*/
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	
+</CodeSnippets>

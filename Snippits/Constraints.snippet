@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+	<_locTag _loc="locData">Default</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>PRIMARY KEY Constraint</Title>
+			<Description>
+			The PRIMARY KEY constraint uniquely identifies each record in a database table.
+			Primary keys must contain UNIQUE values and cannot contain NULL values.
+			Most tables should have a primary key, and each table can have only ONE primary key.
+			</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+			-- Creates a atble with a primary key.
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName VARCHAR(255) NOT NULL,
+FirstName VARCHAR(255),
+City VARCHAR(255),
+Address VARCHAR(255),
+Zip VARCHAR(13),
+PRIMARY KEY (P_Id)
+)
+--
+--This one makes a table with the PK named/labled.
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName VARCHAR(255) NOT NULL,
+FirstName VARCHAR(255),
+City VARCHAR(255),
+Address VARCHAR(255),
+Zip VARCHAR(13),
+CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)
+)
+
+/*
+			The PRIMARY KEY constraint uniquely identifies each record in a database table.
+			Primary keys must contain UNIQUE values and cannot contain NULL values.
+			Most tables should have a primary key, and each table can have only ONE primary key.
+			
+*/
+
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>FOREIGN KEY Constraint</Title>
+			<Description>
+			A FOREIGN KEY in one table points to a PRIMARY KEY in another table.
+			It also is there to prevent the deletion of the table that it is connected
+			without the other Table.
+			</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+--This creates the table that you want to create the key in.
+CREATE TABLE PreOrders
+(
+O_Id int NOT NULL,
+P_Id int,
+OrderNo int NOT NULL,
+PRIMARY KEY (O_Id),
+FOREIGN KEY (P_Id) REFERENCES Persons(P_Id)
+)			
+
+--Then this one is a table that is made with the key locking into it
+-- from the table above 
+CREATE TABLE Orders
+(
+O-id INT NOT NULL,
+OrderNo INT NOT NULL,
+P_Id INT,
+PRIMARY KEY (O_Id),
+CONSTRAINT fk_PreOrders FOREIGN KEY (P_Id),
+REFERENCES Persons(P_Id)
+)
+
+/*
+			A FOREIGN KEY in one table points to a PRIMARY KEY in another table.
+			It also is there to prevent the deletion of the table that it is connected
+			without the other Table.
+*/
+
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>CHECK Constraint</Title>
+			<Description>
+			The CHECK constraint is 
+			used to limit the value range that can be placed in a column.
+			If you define a CHECK constraint on a single column 
+			it allows only certain values for this column.
+			If you define a CHECK constraint on a table it can 
+			limit the values in certain columns based on values in other columns in the row.
+			</Description>
+			<Author>AshDaad</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+--This creates a table with a constraint to only allow 
+--P-Id to be greater than 0
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName VARCHAR(255) NOT NULL,
+FirstName VARCHAR(255),
+City VARCHAR(255),
+Address VARCHAR(255),
+Zip VARCHAR(13),
+PRIMARY KEY (P_Id)
+CHECK (P_Id>0)
+)
+
+--Name is similar to the PK
+CREATE TABLE Persons
+(
+P_Id int NOT NULL,
+LastName VARCHAR(255) NOT NULL,
+FirstName VARCHAR(255),
+City VARCHAR(255),
+Address VARCHAR(255),
+Zip VARCHAR(13),
+PRIMARY KEY (P_Id)
+CHECK (P_Id>0 AND City = 'Sadness')
+)
+/*
+			The CHECK constraint is 
+			used to limit the value range that can be placed in a column.
+			If you define a CHECK constraint on a single column 
+			it allows only certain values for this column.
+			If you define a CHECK constraint on a table it can 
+			limit the values in certain columns based on values in other columns in the row.
+			
+*/
+
+			]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+	
+</CodeSnippets>
