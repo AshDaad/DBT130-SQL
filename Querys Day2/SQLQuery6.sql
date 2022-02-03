@@ -1,0 +1,1 @@
+SELECT 'demo' AS firstResultSet
